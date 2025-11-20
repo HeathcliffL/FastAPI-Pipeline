@@ -2,9 +2,9 @@
 
 This project ingests user-reported tickets via a **FastAPI** service, stores them in **SQLite**, submits the email **headers** to a self-hosted **Mail Header Analyzer (MHA)** web app, and assigns an `analyzer_status` of **pass/fail/unknown** based on the `Authentication-Results` fields **SPF/DKIM/DMARC** parsed from the raw headers.
 
-> ✅ **Pass** = `spf=pass` **AND** `dkim=pass` **AND** `dmarc=pass`  
-> ❌ **Fail** = any of SPF/DKIM/DMARC exists and is **not** `pass` (e.g., `softfail`, `fail`, `none`, `permerror`, `temperror`, `neutral`, …)  
-> ❓ **Unknown** = none of SPF/DKIM/DMARC appear in the headers
+**Pass** = `spf=pass` **AND** `dkim=pass` **AND** `dmarc=pass`  
+**Fail** = any of SPF/DKIM/DMARC exists and is **not** `pass` (e.g., `softfail`, `fail`, `none`, `permerror`, `temperror`, `neutral`, …)  
+**Unknown** = none of SPF/DKIM/DMARC appear in the headers
 
 ---
 
