@@ -67,7 +67,6 @@ git clone https://github.com/lnxg33k/email-header-analyzer.git
 2) **Configure** `docker-compose.yml` (already set in this project):
 - FastAPI service (`api`) exposes **8000**
 - Analyzer service (`analyzer`) is reachable from API at `http://analyzer:8080/`
-- Optionally map analyzer to host (e.g., `8081:8080`) if you want to open its UI in your browser
 
 3) **Build & run**:
 ```bash
@@ -78,8 +77,6 @@ sudo docker compose ps
 4) **Health checks**:
 ```bash
 curl http://localhost:8000/         # FastAPI health JSON
-# If analyzer mapped to host 8081:
-curl http://localhost:8081/         # Analyzer UI HTML
 ```
 
 5) **Send a sample ticket** (randomized pass/fail headers):
@@ -180,23 +177,6 @@ What it does:
 - Generates realistic **Received** chain and `Authentication-Results`
 - Randomly picks all-pass (probability `--pass-prob`) or fail/no-pass variants
 - Sends to your API and prints the server’s response
-
----
-
-## Troubleshooting
-
-- **Port collision (8080 in use)**: Either change analyzer mapping to `8081:8080` or remove `ports:` and use `expose:` for internal-only. Re-run `docker compose up -d --build`.
-- **Permissions with Docker**: add your user to the `docker` group or prefix with `sudo`.
-- **`analyzer_status=analyzer_error`**: MHA not reachable. Check `ANALYZER_FORM_URL` and container logs: `docker compose logs -f analyzer`.
-- **Ngrok**: the API must be reachable from your PC; use ngrok on the FastAPI port (8000).
-
----
-
-## Metrics (what to report in class)
-
-- **Classifier metrics**: precision/recall/F1 for the pass/fail from headers *(if you build a small labeled set)*
-- **System metrics**: average latency per ticket, automation rate, success rate of analyzer call, end-to-end demo.
-- **Reproducibility**: include `docker-compose.yml`, `requirements.txt`, and a small seed dataset (e.g., a few sample headers).
 
 ---
 
