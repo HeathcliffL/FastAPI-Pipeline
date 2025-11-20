@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  api:
+    build: ./app
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: /data/tickets.db
+      # MHA UI form endpoint (service name works inside the compose network)
+      ANALYZER_FORM_URL: "http://analyzer:8080/"
+    volumes:
+      - api_data:/data
+    depends_on:
+      - analyzer
+
+  analyzer:
+    # If you cloned the repo next to this compose file, build it locally:
+    #   git clone https://github.com/lnxg33k/email-header-analyzer.git
+    #   (so the path below exists)
+    build: ../email-header-analyzer
+    container_name: email-header-analyzer
+    ports:
+      - "8080:8080"
+
+volumes:
+  api_data:
+
