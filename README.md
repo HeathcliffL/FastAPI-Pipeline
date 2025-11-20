@@ -10,7 +10,7 @@ This project ingests user-reported tickets via a **FastAPI** service, stores the
 
 ## Architecture
 
-```mermaid
+```
 flowchart LR
   U[User / Script / Postman] -->|POST /tickets| A[FastAPI]
   subgraph A1[FastAPI app]
